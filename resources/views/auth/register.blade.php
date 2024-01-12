@@ -8,6 +8,33 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
+            
+        
+
+        <div class="container ">
+
+            <!--  -->
+            <!-- <div class="roles ">
+
+                <div class="flex justify-center items-center" >
+
+                    <div class="admin-role ">
+                
+                        <label>
+                            <input type="radio" name="role" value="Usuario" checked> Usuario
+                        </label>
+                    </div>
+
+                    <div class="user-role ml-4" >
+                
+                        <label>
+                            <input type="radio" name="role" value="Administrador"> Administrador
+                        </label>
+                    </div>
+
+                </div>
+
+            </div> -->
 
             <div>
                 <x-label for="name" value="{{ __('Nombre') }}" />

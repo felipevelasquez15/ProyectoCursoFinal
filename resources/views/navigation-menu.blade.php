@@ -4,21 +4,84 @@
         <div class="flex justify-between h-16">
             <div class="flex">
                 <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                <!-- <div class="shrink-0 flex items-center">
+                    <a href="{{ route('inicio') }}">
                         <x-application-mark class="block h-9 w-auto" />
                     </a>
-                </div>
+                </div> -->
+                <a href="{{ route('inicio') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
+                    <img src="{{ asset('img/logop.png') }}" class="h-10 w-auto t-0" alt="Flowbite Logo">
+                    
+                </a>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('inicio') }}" >
+                    {{ __('Inicio') }}
                     </x-nav-link>
+                    </div>
+                
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('nosotros') }}" >
+                    {{ __('Nosotros') }}
+                    </x-nav-link>
+                    </div>
+
+                    
+
+
+
+                <!-- validacion si el usuario es administrador para mostrar pestaña de gestion-->
+
+                @if(auth()->user()->role === 'admin')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('autos.index') }}" :active="request()->routeIs('autos.index')">
+                    {{ __('Gestion Automoviles') }}
+                    </x-nav-link>
+                    </div>
+
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('compras') }}" :active="request()->routeIs('compras')">
+                    {{ __('Compras Realizadas') }}
+                    </x-nav-link>
+                    </div>
+                @endif
+
+                @if(auth()->user() && auth()->user()->role != 'admin')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('catalogo') }}">
+                        {{ __('Catalogo De Autos') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('resenas.index') }}">
+                        {{ __('Reseñas De Usuarios') }}
+                    </x-nav-link>
+                </div>
+                @endif
+
                 </div>
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                @if(auth()->user() && auth()->user()->role != 'admin')
+                    <a href="{{ route('carritos.index') }}" class="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="w-6 h-6 mr-1 text-white-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                            <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M8 8v1h4V8m4 7H4a1 1 0 0 1-1-1V5h14v9a1 1 0 0 1-1 1ZM2 1h16a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1Z"/>
+                        </svg>
+                        Carrito De Compras
+                    </a>
+                @endif
+
+
+
+                </div>
+            
                 <!-- Teams Dropdown -->
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
                     <div class="ms-3 relative">
@@ -65,6 +128,8 @@
                                             <x-switchable-team :team="$team" />
                                         @endforeach
                                     @endif
+
+
                                 </div>
                             </x-slot>
                         </x-dropdown>
@@ -95,11 +160,11 @@
                         <x-slot name="content">
                             <!-- Account Management -->
                             <div class="block px-4 py-2 text-xs text-gray-400">
-                                {{ __('Manage Account') }}
+                                {{ __('Administrar cuenta') }}
                             </div>
 
                             <x-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Profile') }}
+                                {{ __('Perfil') }}
                             </x-dropdown-link>
 
                             @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
@@ -116,7 +181,7 @@
 
                                 <x-dropdown-link href="{{ route('logout') }}"
                                          @click.prevent="$root.submit();">
-                                    {{ __('Log Out') }}
+                                    {{ __('Cerrar sesion') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
